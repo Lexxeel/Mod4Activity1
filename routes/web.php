@@ -1,6 +1,6 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController; // Import the OrderController
 
 /*
 |--------------------------------------------------------------------------
@@ -17,42 +17,14 @@ Route::get('/', function () {
     return view('welcome'); // Or any default page you have
 });
 
-// Route for customer with required parameters [cite: 80]
-Route::get('/customer/{customerId}/{name}/{address}', function ($customerId, $name, $address) {
-    return view('customerDetail', [
-        'customerId' => $customerId,
-        'customerName' => $name,
-        'customerAddress' => $address
-    ]);
-})->name('customer.show');
+// Route for customer using OrderController
+Route::get('/customer/{customerId}/{name}/{address}', [OrderController::class, 'showCustomer'])->name('customer.show');
 
-// Route for item with required parameters [cite: 81]
-Route::get('/item/{itemNo}/{name}/{price}', function ($itemNo, $name, $price) {
-    return view('itemDetail', [
-        'itemNo' => $itemNo,
-        'itemName' => $name,
-        'itemPrice' => $price
-    ]);
-})->name('item.show');
+// Route for item using OrderController
+Route::get('/item/{itemNo}/{name}/{price}', [OrderController::class, 'showItem'])->name('item.show');
 
-// Route for order with required parameters [cite: 82]
-Route::get('/order/{customerId}/{name}/{orderNo}/{date}', function ($customerId, $name, $orderNo, $date) {
-    return view('orderDetail', [
-        'customerId' => $customerId,
-        'customerName' => $name,
-        'orderNo' => $orderNo,
-        'orderDate' => $date
-    ]);
-})->name('order.show');
+// Route for order using OrderController
+Route::get('/order/{customerId}/{name}/{orderNo}/{date}', [OrderController::class, 'showOrder'])->name('order.show');
 
-// Route for orderDetails with required parameters [cite: 83]
-Route::get('/orderDetails/{transNo}/{orderNo}/{itemId}/{name}/{price}/{qty}', function ($transNo, $orderNo, $itemId, $name, $price, $qty) {
-    return view('orderDetailsView', [
-        'transNo' => $transNo,
-        'orderNo' => $orderNo,
-        'itemId' => $itemId,
-        'itemName' => $name,
-        'itemPrice' => $price,
-        'quantity' => $qty
-    ]);
-})->name('order.details.show');
+// Route for orderDetails using OrderController
+Route::get('/orderDetails/{transNo}/{orderNo}/{itemId}/{name}/{price}/{qty}', [OrderController::class, 'showOrderDetails'])->name('order.details.show');
